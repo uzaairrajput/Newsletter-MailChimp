@@ -4,7 +4,7 @@ const request = require("request");
 const https = require("https");
 
 const app = express();
-
+console.log('uzair')
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 
