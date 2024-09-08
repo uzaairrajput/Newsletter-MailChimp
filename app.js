@@ -2,7 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
 const https = require("https");
-
+const dotenv = require('dotenv')
+dotenv.config()
 const app = express();
 
 app.use(express.static('public'))
@@ -11,9 +12,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.get("/", function (req, res) {
     res.sendFile(__dirname + "/signup.html");
 });
-
-app.listen(process.env.PORT || 3000, function () {
-    console.log("server is running")
+const PORT = process.env.PORT || 3000
+app.listen(PORT, function () {
+    console.log(`server is running : http://localhost:${PORT}`)
 })
 
 app.post("/", function (req, res) {
@@ -36,21 +37,23 @@ app.post("/", function (req, res) {
         ]
     };
     const jsonData = JSON.stringify(data)
-
+    const MAILCHIMP = process.env.MAILCHIMP_API_KEY
+    
     const url = "https://us10.api.mailchimp.com/3.0/lists/822012c858"
 
     const options = {
         method: "POST",
-        auth: "uzi:0b6f5d3749b9a82aab4f0028eec96b7f-us10"
+        auth: `uzi:${MAILCHIMP}`
     }
 
     const request = https.request(url, options, function (response) {
         if (response.statusCode === 200) {
             res.sendFile(__dirname + "/success.html");
-            
-        }else {
+
+        } else {
+            console.log(response.statusMessage)
             res.sendFile(__dirname + "/failure.html");
-            }
+        }
         response.on("data", function (data) {
             console.log(JSON.parse(data))
 
