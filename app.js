@@ -37,7 +37,7 @@ app.post("/", function (req, res) {
         ]
     };
     const jsonData = JSON.stringify(data)
-    const MAILCHIMP = process.env.MAILCHIMP_API_KEY
+    const MAILCHIMP = "b32007218dff88b5a1cfa891d7d702d4-us10"
     
     const url = "https://us10.api.mailchimp.com/3.0/lists/822012c858"
 
